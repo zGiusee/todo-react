@@ -60,7 +60,7 @@ export default function SidebarList({
 function ListLink(props) {
   const listedClasses = `${
     props.isActive ? "my-active" : ""
-  } py-4 ps-2 flex items-center cursor-pointer`;
+  } p-4 flex items-center cursor-pointer`;
 
   return (
     <li onClick={props.onClick} className={listedClasses}>

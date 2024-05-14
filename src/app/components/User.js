@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function User({ user }) {
   return (
-    <div className=" flex items-center">
+    <div className=" py-8 px-5 flex items-center">
       <img className="rounded-full" src={getImageUrl(user.image)} />
       <span className="mx-2 text-sm">Benvenuto {user.name}!</span>
       <span className="">({user.id})</span>
