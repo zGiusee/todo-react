@@ -5,7 +5,7 @@
 *****************************************************************************/
 import SidebarList from "./SidebarList";
 import User from "./User.js";
-// import { useClient } from "next/client";
+// import { useSelector, useDispatch } from "react-redux";
 
 export default function AppSidebar({
   user,

@@ -28,6 +28,8 @@ import Image from "next/image";
 import AppSidebar from "./components/AppSidebar.js";
 import AppMain from "./components/AppMain.js";
 import { useState } from "react";
+import store from "./store.js";
+import { Provider } from "react-redux";
 
 /**************************************************************************** 
  ****************************************************************************
@@ -83,17 +85,19 @@ export default function App() {
   };
 
   return (
-    <div className="flex">
-      <AppSidebar
-        user={user}
-        list={list}
-        setTodosByListId={setTodosByListId}
-        setSelectedList={setSelectedList}
-        selectedList={selectedList}
-      />
-      <AppMain todos={filteredTodos} />{" "}
-      {/* Passa filteredTodos invece di todos */}
-    </div>
+    <Provider store={store}>
+      <div className="flex">
+        <AppSidebar
+          user={user}
+          list={list}
+          setTodosByListId={setTodosByListId}
+          setSelectedList={setSelectedList}
+          selectedList={selectedList}
+        />
+        <AppMain todos={filteredTodos} />{" "}
+        {/* Passa filteredTodos invece di todos */}
+      </div>
+    </Provider>
   );
 }
 
