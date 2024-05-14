@@ -19,7 +19,7 @@ export default function AppSidebar({
       <div className="">
         {/* USER INFO'S */}
         <div>
-          <User name={user.name} image={user.image} id={user.id} />
+          <User user={user} />
         </div>
 
         <hr className="mx-5 text-white" />

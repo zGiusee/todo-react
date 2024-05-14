@@ -1,10 +1,11 @@
 import Image from "next/image";
+
 export default function User({ user }) {
   return (
     <div className=" flex items-center">
-      <img className="rounded-full" src={getImageUrl(image)} />
-      <span className="mx-2 text-sm">Benvenuto {toUP(name)}!</span>
-      <span className="">({id})</span>
+      <img className="rounded-full" src={getImageUrl(user.image)} />
+      <span className="mx-2 text-sm">Benvenuto {user.name}!</span>
+      <span className="">({user.id})</span>
     </div>
   );
 }
