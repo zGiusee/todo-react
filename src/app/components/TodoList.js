@@ -4,11 +4,20 @@
 *****************************************************************************
 *****************************************************************************/
 import TodoItem from "./TodoItem";
+import TodoCreator from "./TodoCreator";
 
 export default function TodoList({ todos }) {
   // ! Eseguo il richiamo della funzione
   const todoList = getTodos(todos);
-  return <ul>{todoList}</ul>;
+  return (
+    <div className="h-screen relative">
+      <div className="py-6 px-10">
+        <ul>{todoList}</ul>
+      </div>
+
+      <TodoCreator />
+    </div>
+  );
 }
 
 // ! DEFINISCO UNA FUNZIONE CHE FA RITORNARE L'ARRAY GIà CICLATO CON LA COMPONENTE

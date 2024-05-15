@@ -20,7 +20,7 @@ export default function TodoItem({ text, done }) {
   const todoTextClasses = `${done ? "line-through" : ""} text-sm`;
 
   return (
-    <li className="p-2 w-80 mt-4 flex justify-between rounded-lg border border-gray-300">
+    <li className="p-2 mt-4 flex justify-between rounded-lg border border-gray-300">
       <div className="ms-1 flex items-center">
         <div>
           <input

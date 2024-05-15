@@ -85,19 +85,19 @@ export default function App() {
   };
 
   return (
-    <Provider store={store}>
-      <div className="flex">
-        <AppSidebar
-          user={user}
-          list={list}
-          setTodosByListId={setTodosByListId}
-          setSelectedList={setSelectedList}
-          selectedList={selectedList}
-        />
-        <AppMain todos={filteredTodos} />{" "}
-        {/* Passa filteredTodos invece di todos */}
-      </div>
-    </Provider>
+    // <Provider store={store}>
+    <div className="flex">
+      <AppSidebar
+        user={user}
+        list={list}
+        setTodosByListId={setTodosByListId}
+        setSelectedList={setSelectedList}
+        selectedList={selectedList}
+      />
+      <AppMain todos={filteredTodos} />{" "}
+      {/* Passa filteredTodos invece di todos */}
+    </div>
+    // </Provider>
   );
 }
 
