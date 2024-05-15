@@ -51,7 +51,7 @@ const list = [
   { id: 4, name: "Libri da leggere4", icon: faBook, undone_count: 0 },
 ];
 
-const todos = [
+const initialTodos = [
   { id: 1, listId: 1, text: "Prima Attività", done: false },
   { id: 2, listId: 1, text: "Seconda Attività", done: false },
   { id: 3, listId: 2, text: "Terza Attività", done: true },
@@ -67,13 +67,28 @@ const todos = [
 *****************************************************************************/
 
 export default function App() {
+  // * DATO DELLE TODOS
+  const [allTodos, setAllTodos] = useState(initialTodos);
+
   //* DATO DELLA LISTA SELEZIONATA
   const [selectedList, setSelectedList] = useState(1);
 
   //* DEFINISCO I DATI DELLE TODOS APPLICANDOGLI SUBITO IL FILTRO
   const [filteredTodos, setFilteredTodos] = useState(
-    todos.filter((elem) => elem.listId === selectedList)
+    allTodos.filter((elem) => elem.listId === selectedList)
   );
+
+  const handleCreateTodo = (text) => {
+    const newTodo = {
+      listId: selectedList,
+      id: Math.floor(Math.random() * 500),
+      done: false,
+      text: text,
+    };
+
+    setAllTodos([...allTodos, newTodo]);
+    setTodosByListId(selectedList);
+  };
 
   //* FUNZIONE CHE VIENE RICHIAMATA PER EFFETTUARE IL FILTRAGGIO DELLE TODOS
   const setTodosByListId = (listId) => {
@@ -81,7 +96,7 @@ export default function App() {
     setSelectedList(listId);
 
     // RICHIAMO DEL SETTER PER DARE LE TODOS CORRETTE
-    setFilteredTodos(todos.filter((elem) => elem.listId === listId));
+    setFilteredTodos(allTodos.filter((elem) => elem.listId === listId));
   };
 
   return (
@@ -94,7 +109,7 @@ export default function App() {
         setSelectedList={setSelectedList}
         selectedList={selectedList}
       />
-      <AppMain todos={filteredTodos} />{" "}
+      <AppMain todos={filteredTodos} onCreate={handleCreateTodo} />{" "}
       {/* Passa filteredTodos invece di todos */}
     </div>
     // </Provider>

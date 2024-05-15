@@ -5,13 +5,13 @@
 *****************************************************************************/
 import TodoList from "./TodoList";
 
-export default function AppMain({ todos, onListClick }) {
+export default function AppMain({ todos, onCreate }) {
   return (
     <div className="flex-1">
       {/* TODO CONTAINER */}
-      <div className="">
+      <div>
         <div>
-          <TodoList todos={todos} onListClick={onListClick} />
+          <TodoList todos={todos} onCreate={onCreate} />
         </div>
       </div>
     </div>

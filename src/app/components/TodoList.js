@@ -6,7 +6,7 @@
 import TodoItem from "./TodoItem";
 import TodoCreator from "./TodoCreator";
 
-export default function TodoList({ todos }) {
+export default function TodoList({ todos, onCreate }) {
   // ! Eseguo il richiamo della funzione
   const todoList = getTodos(todos);
   return (
@@ -15,7 +15,7 @@ export default function TodoList({ todos }) {
         <ul>{todoList}</ul>
       </div>
 
-      <TodoCreator />
+      <TodoCreator onCreate={onCreate} />
     </div>
   );
 }
