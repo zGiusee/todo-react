@@ -1,11 +1,20 @@
 /**************************************************************************** 
  ****************************************************************************
+                            GENERAL IMPORTS
+*****************************************************************************
+*****************************************************************************/
+
+import { useState } from "react";
+
+/**************************************************************************** 
+ ****************************************************************************
                                 COMPONENT IMPORTS
 *****************************************************************************
 *****************************************************************************/
 import StatutsCheckbox from "./input_components/StatusCheckbox";
 import DeleteButton from "./input_components/DeleteButton";
 import TodoText from "./input_components/TodoText";
+import DeleteModal from "./modals/DeleteModal";
 
 /**************************************************************************** 
  ****************************************************************************
@@ -13,15 +22,21 @@ import TodoText from "./input_components/TodoText";
 *****************************************************************************
 *****************************************************************************/
 
-export default function TodoItem({ id, text, done, updateTodo }) {
-  const todoTextClasses = `${done ? "line-through" : ""} text-sm`;
+export default function TodoItem({
+  id,
+  text,
+  done,
+  onTodoUpdate,
+  onTodoDelete,
+}) {
+  const [deleteModalState, setDeleteModalState] = useState(false);
 
   return (
     <li className="p-2 todo-item mt-4 flex justify-between rounded-lg border border-gray-300">
       {/* CHECK BOX AND TASK NAME */}
       <div className="ms-1 flex items-center ">
         <StatutsCheckbox
-          onChange={() => updateTodo(id, { done: !done })}
+          onChange={() => onTodoUpdate(id, { done: !done })}
           done={done}
         />
 
@@ -29,7 +44,14 @@ export default function TodoItem({ id, text, done, updateTodo }) {
       </div>
       {/* ICONS/BUTTONS */}
       <div className="me-2">
-        <DeleteButton />
+        <DeleteButton onClick={() => setDeleteModalState(true)} />
+        {deleteModalState && (
+          <DeleteModal
+            text={text}
+            onDelete={() => onTodoDelete(id)}
+            onCancel={() => setDeleteModalState(false)}
+          />
+        )}
       </div>
     </li>
   );

@@ -101,6 +101,7 @@ export default function App() {
     };
 
     const tempLists = [...allLists];
+
     const listToUpdate = tempLists.find((list) => list.id === selectedList);
     if (listToUpdate) {
       listToUpdate.undone_count++;
@@ -119,10 +120,10 @@ export default function App() {
     // Recupero l'oggetto usando l'index
     const todoToUpdate = allTodos[todoIdx];
 
-    // Definisco l'oggetto con lo spread operator
-    // e inserendo anche il nuovo dato definito come parametro in TodoItem
-    // Definito così: onChange={() => updateTodo(id, { done: !done })}
-    // Quindi qua è come se gli stessimo passando un oggetto che lui automaticamente cambia
+    // * Definisco l'oggetto con lo spread operator
+    // * e inserendo anche il nuovo dato definito come parametro in TodoItem
+    // * Definito così: onChange={() => updateTodo(id, { done: !done })}
+    // * Quindi qua è come se gli stessimo passando un oggetto che lui automaticamente cambia
     const updateTodo = {
       ...todoToUpdate,
       ...doneData,
@@ -136,21 +137,46 @@ export default function App() {
     setAllTodos(tempTodos);
 
     // Recupero l'index lista selezionata
-    const listIdx = allLists.findIndex((l) => l.id === selectedList);
+    const listIdx = getListIdx(selectedList);
     if (todoToUpdate.done != updateTodo.done) {
-      // Definisco un array temporaneo che poi andrà a sostituire quello vecchio
-      const tempLists = [...allLists];
-
       // Controllo sul valore della todo DOPO l'aggiornamento
       if (updateTodo.done) {
-        tempLists[listIdx].undone_count--;
+        addToListCount(listIdx, -1);
       } else {
-        tempLists[listIdx].undone_count++;
+        addToListCount(listIdx, +1);
       }
-
-      // Utilizzo il setter per cambiare il valore
-      setAllLists(tempLists);
     }
+  };
+
+  const handleTodoDelete = (id) => {
+    // Recupero l'index dell todo usando findIndex
+    const todoIdx = allTodos.findIndex((t) => t.id === id);
+    // Recupero l'oggetto usando l'index
+    const todo = allTodos[todoIdx];
+
+    // Definico un array temporaneo di todos
+    const tempTodos = [...allTodos];
+    // Rimuovo dall'array l'elemento
+    tempTodos.splice(todoIdx, 1);
+    // Ed infine setto di nuovo tutte le todo
+    setAllTodos(tempTodos);
+
+    const listIdx = getListIdx(selectedList);
+    addToListCount(listIdx, todo.done ? 0 : -1);
+  };
+
+  const addToListCount = (listIdx, num) => {
+    // Definisco un array temporaneo che poi andrà a sostituire quello vecchio
+    const tempLists = [...allLists];
+
+    // Recupero la lista selezionata
+    // E con l'operatore spread ne vado a creare un altra per poi modificare
+    // il valore di undone_count
+    tempLists[listIdx] = { ...tempLists[listIdx] };
+    tempLists[listIdx].undone_count += num;
+
+    // Utilizzo il setter per cambiare il valore
+    setAllLists(tempLists);
   };
 
   //* FUNZIONE CHE VIENE RICHIAMATA PER EFFETTUARE IL FILTRAGGIO DELLE TODOS
@@ -160,6 +186,11 @@ export default function App() {
 
     // RICHIAMO DEL SETTER PER DARE LE TODOS CORRETTE
     setFilteredTodos(allTodos.filter((t) => t.listId === listId));
+  };
+
+  // FUNZIONE CHE MI RITORNA IL ListIdx dall' list id
+  const getListIdx = (id) => {
+    return allLists.findIndex((l) => l.id === selectedList);
   };
 
   return (
@@ -177,6 +208,7 @@ export default function App() {
       ) : (
         <AppMain
           onTodoUpdate={handelUpdateTodo}
+          onTodoDelete={handleTodoDelete}
           todos={filteredTodos}
           onCreate={handleCreateTodo}
         />

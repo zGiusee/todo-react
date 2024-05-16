@@ -5,7 +5,12 @@
 *****************************************************************************/
 import TodoList from "./TodoList";
 
-export default function AppMain({ todos, onCreate, onTodoUpdate }) {
+export default function AppMain({
+  todos,
+  onCreate,
+  onTodoUpdate,
+  onTodoDelete,
+}) {
   return (
     <div className="flex-1 overflow-auto">
       {/* TODO CONTAINER */}
@@ -14,6 +19,7 @@ export default function AppMain({ todos, onCreate, onTodoUpdate }) {
           todos={todos}
           onTodoUpdate={onTodoUpdate}
           onCreate={onCreate}
+          onTodoDelete={onTodoDelete}
         />
       </div>
     </div>
