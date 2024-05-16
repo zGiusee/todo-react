@@ -10,9 +10,7 @@ export default function AppMain({ todos, onCreate }) {
     <div className="flex-1 overflow-auto">
       {/* TODO CONTAINER */}
       <div>
-        <div>
-          <TodoList todos={todos} onCreate={onCreate} />
-        </div>
+        <TodoList todos={todos} onCreate={onCreate} />
       </div>
     </div>
   );

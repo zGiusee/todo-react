@@ -60,12 +60,17 @@ export default function SidebarList({
 function ListLink(props) {
   const listedClasses = `${
     props.isActive ? "my-active" : ""
-  } p-4 flex items-center cursor-pointer`;
+  } p-4 flex items-center cursor-pointer justify-between`;
 
   return (
     <li onClick={props.onClick} className={listedClasses}>
-      <FontAwesomeIcon icon={props.icon} className="text-sm" />{" "}
-      <span className="ms-2 text-sm">{props.linkName}</span>
+      <div>
+        <FontAwesomeIcon icon={props.icon} className="text-sm" />{" "}
+        <span className="ms-2 text-sm">{props.linkName}</span>{" "}
+      </div>
+      <div>
+        <span className="ms-1 text-end text-sm">({props.count})</span>
+      </div>
     </li>
   );
 }

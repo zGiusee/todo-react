@@ -5,43 +5,38 @@
 *****************************************************************************/
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-library.add(faTrash);
+library.add(faCircleExclamation);
+<i class="fa-solid fa-circle-exclamation"></i>;
 
 /**************************************************************************** 
  ****************************************************************************
-                                TODO ITEM
+                            NO LIST VIEW COMPONENT
 *****************************************************************************
 *****************************************************************************/
 
-export default function TodoItem({ text, done }) {
-  const todoTextClasses = `${done ? "line-through" : ""} text-sm`;
-
+export default function noListView() {
   return (
-    <li className="p-2 todo-item mt-4 flex justify-between rounded-lg border border-gray-300">
-      {/* CHECK BOX AND TASK NAME */}
-      <div className="ms-1 flex items-center ">
+    <div className="flex-1 vh-100 flex justify-center content-center">
+      {/* TODO CONTAINER */}
+      <div className="text-center flex items-center">
         <div>
-          <input
-            type="checkbox"
-            readOnly={true}
-            className="mx-2"
-            checked={done}
-          />
-        </div>
-        <div>
-          <span className={todoTextClasses}>{text}</span>
+          <p>
+            <FontAwesomeIcon
+              icon={faCircleExclamation}
+              className=" text-6xl text-gray-600"
+            />
+          </p>
+          <p className="text-2xl text-gray-600 mt-3 mb-2">
+            Nessun elenco selezionato!
+          </p>
+          <p className="text-1xl text-gray-600">
+            Seleziona un elenco per aggiungere nuove attività.
+          </p>
         </div>
       </div>
-
-      {/* ICONS/BUTTONS */}
-      <div className="me-2">
-        <button type="button" className="mx-2 my-btn-delete rounded-lg">
-          <FontAwesomeIcon icon={faTrash} className="text-sm my-delete-icon" />
-        </button>
-      </div>
-    </li>
+    </div>
   );
 }

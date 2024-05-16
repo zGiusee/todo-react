@@ -32,6 +32,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import store from "./store.js";
 import { Provider } from "react-redux";
+import { v4 as uuid } from "uuid";
+import NoListView from "./components/NoListView.js";
 
 /**************************************************************************** 
  ****************************************************************************
@@ -46,11 +48,11 @@ const user = {
   id: 1,
 };
 
-const list = [
-  { id: 1, name: "Importante", icon: faBookmark, undone_count: 0 },
-  { id: 2, name: "Film da vedere", icon: faFilm, undone_count: 2 },
+const initialLists = [
+  { id: 1, name: "Importante", icon: faBookmark, undone_count: 2 },
+  { id: 2, name: "Film da vedere", icon: faFilm, undone_count: 0 },
   { id: 3, name: "Libri da leggere", icon: faBook, undone_count: 0 },
-  { id: 4, name: "Libri da leggere4", icon: faBook, undone_count: 0 },
+  { id: 4, name: "Libri da leggeress", icon: faBook, undone_count: 0 },
 ];
 
 const initialTodos = [
@@ -70,12 +72,13 @@ const initialTodos = [
 
 export default function App() {
   //* DATO DELLA LISTA SELEZIONATA
-  const [selectedList, setSelectedList] = useState(1);
-
+  const [selectedList, setSelectedList] = useState(-1);
+  // * DATO DELLE LISTE
+  const [allLists, setAllLists] = useState(initialLists);
   // * DATO DELLE TODOS
   const [allTodos, setAllTodos] = useState(initialTodos);
 
-  // DEFINISCO I DATI DELLE TODOS APPLICANDOGLI SUBITO IL FILTRO
+  // * DEFINISCO I DATI DELLE TODOS APPLICANDOGLI SUBITO IL FILTRO
   const [filteredTodos, setFilteredTodos] = useState(
     allTodos.filter((t) => t.listId === selectedList)
   );
@@ -92,10 +95,19 @@ export default function App() {
   const handleCreateTodo = (text) => {
     const newTodo = {
       listId: selectedList,
-      id: Math.floor(Math.random() * 500),
+      id: uuid(),
       done: false,
       text: text,
     };
+
+    const tempLists = [...allLists];
+    const listToUpdate = tempLists.find((list) => list.id === selectedList);
+    if (listToUpdate) {
+      listToUpdate.undone_count++;
+      setAllLists(tempLists);
+    } else {
+      console.error("List with id:", selectedList, "not found.");
+    }
 
     setAllTodos((prevTodos) => [...prevTodos, newTodo]);
   };
@@ -106,7 +118,7 @@ export default function App() {
     setSelectedList(listId);
 
     // RICHIAMO DEL SETTER PER DARE LE TODOS CORRETTE
-    setFilteredTodos(allTodos.filter((elem) => elem.listId === listId));
+    setFilteredTodos(allTodos.filter((t) => t.listId === listId));
   };
 
   return (
@@ -114,13 +126,16 @@ export default function App() {
     <div className="flex">
       <AppSidebar
         user={user}
-        list={list}
+        list={allLists}
         setTodosByListId={setTodosByListId}
         setSelectedList={setSelectedList}
         selectedList={selectedList}
       />
-      <AppMain todos={filteredTodos} onCreate={handleCreateTodo} />{" "}
-      {/* Passa filteredTodos invece di todos */}
+      {selectedList === -1 ? (
+        <NoListView />
+      ) : (
+        <AppMain todos={filteredTodos} onCreate={handleCreateTodo} />
+      )}
     </div>
     // </Provider>
   );

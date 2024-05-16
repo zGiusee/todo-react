@@ -16,7 +16,10 @@ export default function todoCreator({ onCreate }) {
           }}
           onKeyUp={(event) => {
             if (event.key === "Enter") {
-              onCreate(text);
+              if (text.trim().length > 0) {
+                onCreate(text);
+                setText("");
+              }
             }
           }}
           value={text}
