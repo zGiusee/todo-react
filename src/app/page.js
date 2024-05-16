@@ -12,10 +12,11 @@ import {
   faFilm,
   faBook,
   faBookmark,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-library.add(faBars, faFilm, faBook, faBookmark);
+library.add(faBars, faFilm, faBook, faBookmark, faTrash);
 
 /**************************************************************************** 
  ****************************************************************************
@@ -28,6 +29,7 @@ import Image from "next/image";
 import AppSidebar from "./components/AppSidebar.js";
 import AppMain from "./components/AppMain.js";
 import { useState } from "react";
+import { useEffect } from "react";
 import store from "./store.js";
 import { Provider } from "react-redux";
 
@@ -67,17 +69,26 @@ const initialTodos = [
 *****************************************************************************/
 
 export default function App() {
-  // * DATO DELLE TODOS
-  const [allTodos, setAllTodos] = useState(initialTodos);
-
   //* DATO DELLA LISTA SELEZIONATA
   const [selectedList, setSelectedList] = useState(1);
 
-  //* DEFINISCO I DATI DELLE TODOS APPLICANDOGLI SUBITO IL FILTRO
+  // * DATO DELLE TODOS
+  const [allTodos, setAllTodos] = useState(initialTodos);
+
+  // DEFINISCO I DATI DELLE TODOS APPLICANDOGLI SUBITO IL FILTRO
   const [filteredTodos, setFilteredTodos] = useState(
-    allTodos.filter((elem) => elem.listId === selectedList)
+    allTodos.filter((t) => t.listId === selectedList)
   );
 
+  // Effect che si attiva ogni volta che allTodos cambia
+  useEffect(() => {
+    // Filtra i todos in base alla lista selezionata
+    const filtered = allTodos.filter((todo) => todo.listId === selectedList);
+    // Aggiorna lo stato delle todos filtrate
+    setFilteredTodos(filtered);
+  }, [allTodos, selectedList]); // Dipendenze dell'effetto laterale
+
+  // FUNZIONE DI CREAZIONE DI UNA NUOVA TODO
   const handleCreateTodo = (text) => {
     const newTodo = {
       listId: selectedList,
@@ -86,8 +97,7 @@ export default function App() {
       text: text,
     };
 
-    setAllTodos([...allTodos, newTodo]);
-    setTodosByListId(selectedList);
+    setAllTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
   //* FUNZIONE CHE VIENE RICHIAMATA PER EFFETTUARE IL FILTRAGGIO DELLE TODOS

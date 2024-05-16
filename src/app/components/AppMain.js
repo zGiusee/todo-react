@@ -7,7 +7,7 @@ import TodoList from "./TodoList";
 
 export default function AppMain({ todos, onCreate }) {
   return (
-    <div className="flex-1">
+    <div className="flex-1 overflow-auto">
       {/* TODO CONTAINER */}
       <div>
         <div>
