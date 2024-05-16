@@ -49,7 +49,7 @@ const user = {
 };
 
 const initialLists = [
-  { id: 1, name: "Importante", icon: faBookmark, undone_count: 2 },
+  { id: 1, name: "Importante", icon: faBookmark, undone_count: 3 },
   { id: 2, name: "Film da vedere", icon: faFilm, undone_count: 0 },
   { id: 3, name: "Libri da leggere", icon: faBook, undone_count: 0 },
   { id: 4, name: "Libri da leggeress", icon: faBook, undone_count: 0 },
@@ -57,6 +57,8 @@ const initialLists = [
 
 const initialTodos = [
   { id: 1, listId: 1, text: "Prima Attività", done: false },
+  { id: 7, listId: 1, text: "Prima Attività", done: false },
+  { id: 8, listId: 1, text: "Prima Attività", done: true },
   { id: 2, listId: 1, text: "Seconda Attività", done: false },
   { id: 3, listId: 2, text: "Terza Attività", done: true },
   { id: 4, listId: 3, text: "Quarta Attività", done: true },
