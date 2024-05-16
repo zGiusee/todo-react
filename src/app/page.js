@@ -114,7 +114,7 @@ export default function App() {
   };
 
   // ! FUNZIONE CHE CAMBIA IL VALORE DELLE CHECKBOX E CHE MODIFICA IL COUNT DELLE TODO COMPLETATE
-  const handelUpdateTodo = (id, doneData) => {
+  const handelUpdateTodo = (id, data) => {
     // Recupero l'index dell todo usando findIndex
     const todoIdx = allTodos.findIndex((t) => t.id === id);
     // Recupero l'oggetto usando l'index
@@ -126,7 +126,7 @@ export default function App() {
     // * Quindi qua è come se gli stessimo passando un oggetto che lui automaticamente cambia
     const updateTodo = {
       ...todoToUpdate,
-      ...doneData,
+      ...data,
     };
 
     // Definico un array temporaneo di todos
@@ -223,8 +223,3 @@ export default function App() {
                           GENERAL FUNCTIONS 
 *****************************************************************************
 *****************************************************************************/
-
-// FUNZIONE CHE RITORNA LA STRINGA IN UPPER CASE (Manipolazione dei dati)
-function toUP(str) {
-  return str.toUpperCase();
-}

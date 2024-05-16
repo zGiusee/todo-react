@@ -34,13 +34,17 @@ export default function TodoItem({
   return (
     <li className="p-2 todo-item mt-4 flex justify-between rounded-lg border border-gray-300">
       {/* CHECK BOX AND TASK NAME */}
-      <div className="ms-1 flex items-center ">
+      <div className="ms-1 flex items-center w-full">
         <StatutsCheckbox
           onChange={() => onTodoUpdate(id, { done: !done })}
           done={done}
         />
 
-        <TodoText done={done} text={text} />
+        <TodoText
+          onChange={(newText) => onTodoUpdate(id, { text: newText })}
+          done={done}
+          text={text}
+        />
       </div>
       {/* ICONS/BUTTONS */}
       <div className="me-2">
