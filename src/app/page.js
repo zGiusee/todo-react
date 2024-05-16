@@ -83,7 +83,7 @@ export default function App() {
     allTodos.filter((t) => t.listId === selectedList)
   );
 
-  // Effect che si attiva ogni volta che allTodos cambia
+  // ! Effect che si attiva ogni volta che allTodos cambia
   useEffect(() => {
     // Filtra i todos in base alla lista selezionata
     const filtered = allTodos.filter((todo) => todo.listId === selectedList);
@@ -91,7 +91,7 @@ export default function App() {
     setFilteredTodos(filtered);
   }, [allTodos, selectedList]); // Dipendenze dell'effetto laterale
 
-  // FUNZIONE DI CREAZIONE DI UNA NUOVA TODO
+  // ! FUNZIONE DI CREAZIONE DI UNA NUOVA TODO
   const handleCreateTodo = (text) => {
     const newTodo = {
       listId: selectedList,
@@ -110,6 +110,47 @@ export default function App() {
     }
 
     setAllTodos((prevTodos) => [...prevTodos, newTodo]);
+  };
+
+  // ! FUNZIONE CHE CAMBIA IL VALORE DELLE CHECKBOX E CHE MODIFICA IL COUNT DELLE TODO COMPLETATE
+  const handelUpdateTodo = (id, doneData) => {
+    // Recupero l'index dell todo usando findIndex
+    const todoIdx = allTodos.findIndex((t) => t.id === id);
+    // Recupero l'oggetto usando l'index
+    const todoToUpdate = allTodos[todoIdx];
+
+    // Definisco l'oggetto con lo spread operator
+    // e inserendo anche il nuovo dato definito come parametro in TodoItem
+    // Definito così: onChange={() => updateTodo(id, { done: !done })}
+    // Quindi qua è come se gli stessimo passando un oggetto che lui automaticamente cambia
+    const updateTodo = {
+      ...todoToUpdate,
+      ...doneData,
+    };
+
+    // Definico un array temporaneo di todos
+    const tempTodos = [...allTodos];
+    // Sostituisco l'oggetto cambiato
+    tempTodos[todoIdx] = updateTodo;
+    // Ed infine setto di nuovo tutte le todo
+    setAllTodos(tempTodos);
+
+    // Recupero l'index lista selezionata
+    const listIdx = allLists.findIndex((l) => l.id === selectedList);
+    if (todoToUpdate.done != updateTodo.done) {
+      // Definisco un array temporaneo che poi andrà a sostituire quello vecchio
+      const tempLists = [...allLists];
+
+      // Controllo sul valore della todo DOPO l'aggiornamento
+      if (updateTodo.done) {
+        tempLists[listIdx].undone_count--;
+      } else {
+        tempLists[listIdx].undone_count++;
+      }
+
+      // Utilizzo il setter per cambiare il valore
+      setAllLists(tempLists);
+    }
   };
 
   //* FUNZIONE CHE VIENE RICHIAMATA PER EFFETTUARE IL FILTRAGGIO DELLE TODOS
@@ -134,7 +175,11 @@ export default function App() {
       {selectedList === -1 ? (
         <NoListView />
       ) : (
-        <AppMain todos={filteredTodos} onCreate={handleCreateTodo} />
+        <AppMain
+          onTodoUpdate={handelUpdateTodo}
+          todos={filteredTodos}
+          onCreate={handleCreateTodo}
+        />
       )}
     </div>
     // </Provider>

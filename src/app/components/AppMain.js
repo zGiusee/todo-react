@@ -5,12 +5,16 @@
 *****************************************************************************/
 import TodoList from "./TodoList";
 
-export default function AppMain({ todos, onCreate }) {
+export default function AppMain({ todos, onCreate, onTodoUpdate }) {
   return (
     <div className="flex-1 overflow-auto">
       {/* TODO CONTAINER */}
       <div>
-        <TodoList todos={todos} onCreate={onCreate} />
+        <TodoList
+          todos={todos}
+          onTodoUpdate={onTodoUpdate}
+          onCreate={onCreate}
+        />
       </div>
     </div>
   );

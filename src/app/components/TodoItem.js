@@ -1,14 +1,11 @@
 /**************************************************************************** 
  ****************************************************************************
-                                GENERAL IMPORTS
+                                COMPONENT IMPORTS
 *****************************************************************************
 *****************************************************************************/
-
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "@fortawesome/fontawesome-svg-core/styles.css";
-library.add(faTrash);
+import StatutsCheckbox from "./input_components/StatusCheckbox";
+import DeleteButton from "./input_components/DeleteButton";
+import TodoText from "./input_components/TodoText";
 
 /**************************************************************************** 
  ****************************************************************************
@@ -16,31 +13,23 @@ library.add(faTrash);
 *****************************************************************************
 *****************************************************************************/
 
-export default function TodoItem({ text, done }) {
+export default function TodoItem({ id, text, done, updateTodo }) {
   const todoTextClasses = `${done ? "line-through" : ""} text-sm`;
 
   return (
     <li className="p-2 todo-item mt-4 flex justify-between rounded-lg border border-gray-300">
       {/* CHECK BOX AND TASK NAME */}
       <div className="ms-1 flex items-center ">
-        <div>
-          <input
-            type="checkbox"
-            readOnly={true}
-            className="mx-2"
-            checked={done}
-          />
-        </div>
-        <div>
-          <span className={todoTextClasses}>{text}</span>
-        </div>
-      </div>
+        <StatutsCheckbox
+          onChange={() => updateTodo(id, { done: !done })}
+          done={done}
+        />
 
+        <TodoText done={done} text={text} />
+      </div>
       {/* ICONS/BUTTONS */}
       <div className="me-2">
-        <button type="button" className="mx-2 my-btn-delete rounded-lg">
-          <FontAwesomeIcon icon={faTrash} className="text-sm my-delete-icon" />
-        </button>
+        <DeleteButton />
       </div>
     </li>
   );
