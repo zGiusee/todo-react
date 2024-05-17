@@ -15,7 +15,7 @@ export default function AppSidebar({
   selectedList,
 }) {
   return (
-    <div className="flex h-screen overflow-auto text-white bg-gray-600">
+    <div className="flex h-screen overflow-auto text-white bg-gray-600 ">
       <div className="">
         {/* USER INFO'S */}
         <div>

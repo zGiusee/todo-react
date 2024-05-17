@@ -2,10 +2,17 @@ import Image from "next/image";
 
 export default function User({ user }) {
   return (
-    <div className=" py-8 px-5 flex items-center">
-      <img className="rounded-full" src={getImageUrl(user.image)} />
-      <span className="mx-2 text-sm">Benvenuto {user.name}!</span>
-      <span className="">({user.id})</span>
+    <div className=" py-8 px-5 flex items-center content-between">
+      <div className="flex items-center me-8">
+        <img className="rounded-full" src={getImageUrl(user.image)} />
+        <span className="mx-2 text-sm">Benvenuto {user.name}!</span>
+        <span className="">({user.id})</span>
+      </div>
+      <div className="flex items-center cursor-pointer">
+        <div className=" text-gray-400 pb-1 px-2 border rounded-xl border-gray-400 text-3xl">
+          +
+        </div>
+      </div>
     </div>
   );
 }

@@ -17,6 +17,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 library.add(faBars, faFilm, faBook, faBookmark, faTrash);
+import { useState } from "react";
+import { useEffect } from "react";
+import store from "./store.js";
+import { Provider } from "react-redux";
+import { v4 as uuid } from "uuid";
 
 /**************************************************************************** 
  ****************************************************************************
@@ -28,11 +33,6 @@ import Layout from "./layout.js";
 import Image from "next/image";
 import AppSidebar from "./components/AppSidebar.js";
 import AppMain from "./components/AppMain.js";
-import { useState } from "react";
-import { useEffect } from "react";
-import store from "./store.js";
-import { Provider } from "react-redux";
-import { v4 as uuid } from "uuid";
 import NoListView from "./components/NoListView.js";
 
 /**************************************************************************** 
@@ -79,7 +79,6 @@ export default function App() {
   const [allLists, setAllLists] = useState(initialLists);
   // * DATO DELLE TODOS
   const [allTodos, setAllTodos] = useState(initialTodos);
-
   // * DEFINISCO I DATI DELLE TODOS APPLICANDOGLI SUBITO IL FILTRO
   const [filteredTodos, setFilteredTodos] = useState(
     allTodos.filter((t) => t.listId === selectedList)
@@ -105,6 +104,7 @@ export default function App() {
     const tempLists = [...allLists];
 
     const listToUpdate = tempLists.find((list) => list.id === selectedList);
+
     if (listToUpdate) {
       listToUpdate.undone_count++;
       setAllLists(tempLists);
@@ -140,6 +140,7 @@ export default function App() {
 
     // Recupero l'index lista selezionata
     const listIdx = getListIdx(selectedList);
+
     if (todoToUpdate.done != updateTodo.done) {
       // Controllo sul valore della todo DOPO l'aggiornamento
       if (updateTodo.done) {
@@ -209,6 +210,8 @@ export default function App() {
         <NoListView />
       ) : (
         <AppMain
+          lists={allLists}
+          selectedList={selectedList}
           onTodoUpdate={handelUpdateTodo}
           onTodoDelete={handleTodoDelete}
           todos={filteredTodos}

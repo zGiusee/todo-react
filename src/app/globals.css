@@ -27,3 +27,8 @@
   color: red;
   border: 1px solid red;
 }
+
+
+.task-container{
+  height: calc(100vh - 204px);
+}

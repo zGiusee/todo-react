@@ -4,7 +4,7 @@ export default function todoCreator({ onCreate }) {
   const [text, setText] = useState("");
 
   return (
-    <div className="my-5 px-10">
+    <div className="px-10">
       <div className="relative">
         <span className="absolute text-gray-400 top-4 left-4 text-3xl">+</span>
         <input
