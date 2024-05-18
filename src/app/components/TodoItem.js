@@ -52,6 +52,7 @@ export default function TodoItem({
         <DeleteButton onClick={() => setDeleteModalState(true)} />
         {deleteModalState && (
           <DeleteModal
+            type="todo"
             text={text}
             onDelete={() => onTodoDelete(id)}
             onCancel={() => setDeleteModalState(false)}

@@ -12,6 +12,7 @@ export default function AppMain({
   onTodoDelete,
   lists,
   selectedList,
+  onListDelete,
 }) {
   return (
     <div className="flex-1 overflow-auto">
@@ -20,10 +21,11 @@ export default function AppMain({
         <TodoList
           todos={todos}
           onTodoUpdate={onTodoUpdate}
-          onCreate={onCreate}
           onTodoDelete={onTodoDelete}
+          onCreate={onCreate}
           lists={lists}
           selectedList={selectedList}
+          onListDelete={onListDelete}
         />
       </div>
     </div>

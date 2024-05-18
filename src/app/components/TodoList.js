@@ -1,10 +1,26 @@
 /**************************************************************************** 
  ****************************************************************************
+                                GENERAL IMPORTS
+*****************************************************************************
+*****************************************************************************/
+
+import { useState } from "react";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+library.add(faTrash);
+
+/**************************************************************************** 
+ ****************************************************************************
                         TODO AND TODO COMPONENTS 
 *****************************************************************************
 *****************************************************************************/
 import TodoItem from "./TodoItem";
 import TodoCreator from "./TodoCreator";
+import DeleteButton from "./input_components/DeleteButton";
+import DeleteModal from "./modals/DeleteModal";
+import ListTitle from "./input_components/ListTitle";
 
 export default function TodoList({
   todos,
@@ -13,27 +29,36 @@ export default function TodoList({
   onTodoDelete,
   lists,
   selectedList,
+  onListDelete,
 }) {
   const nonCompletedTodos = todos.filter((t) => t.done === false);
   const completedTodos = todos.filter((t) => t.done === true);
   const list = lists.filter((l) => l.id === selectedList);
+  const [deleteModalState, setDeleteModalState] = useState(false);
 
   const completedCointainerClasses = `${
     nonCompletedTodos.length > 0 ? "mt-12" : ""
   } mb-10`;
   return (
     <div className="h-screen overflow-auto">
-      <div className="flex my-8 justify-between items-center">
-        <div>
-          {list.map((l) => (
-            <h1 className="text-6xl mx-5">{l.name}</h1>
-          ))}
+      {list.map((l) => (
+        <div className="flex my-8 justify-between items-center">
+          <ListTitle text={l.name} />
+          <div className="mx-5">
+            <div className="me-2">
+              <DeleteButton onClick={() => setDeleteModalState(true)} />
+              {deleteModalState && (
+                <DeleteModal
+                  type="list"
+                  text={l.name}
+                  onDelete={() => onListDelete(l.id)}
+                  onCancel={() => setDeleteModalState(false)}
+                />
+              )}
+            </div>
+          </div>
         </div>
-        <div className="mx-5">
-          <button type="button">Update</button>
-          <button type="button">Delete</button>
-        </div>
-      </div>
+      ))}
 
       <hr class="h-px mx-auto bg-gray-100 border-0 md:my-10 dark:bg-gray-300" />
 

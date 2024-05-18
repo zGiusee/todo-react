@@ -168,6 +168,16 @@ export default function App() {
     addToListCount(listIdx, todo.done ? 0 : -1);
   };
 
+  const handleListDelete = (id) => {
+    const listIdx = allLists.findIndex((l) => l.id === id);
+    const list = allLists[listIdx];
+    const tempLists = [...allLists];
+
+    tempLists.splice(listIdx, 1);
+    setAllLists(tempLists);
+    setSelectedList(-1);
+  };
+
   const addToListCount = (listIdx, num) => {
     // Definisco un array temporaneo che poi andrà a sostituire quello vecchio
     const tempLists = [...allLists];
@@ -212,10 +222,11 @@ export default function App() {
         <AppMain
           lists={allLists}
           selectedList={selectedList}
+          todos={filteredTodos}
           onTodoUpdate={handelUpdateTodo}
           onTodoDelete={handleTodoDelete}
-          todos={filteredTodos}
           onCreate={handleCreateTodo}
+          onListDelete={handleListDelete}
         />
       )}
     </div>
