@@ -30,6 +30,7 @@ export default function TodoList({
   lists,
   selectedList,
   onListDelete,
+  onListUpdate,
 }) {
   const nonCompletedTodos = todos.filter((t) => t.done === false);
   const completedTodos = todos.filter((t) => t.done === true);
@@ -43,7 +44,10 @@ export default function TodoList({
     <div className="h-screen overflow-auto">
       {list.map((l) => (
         <div className="flex my-8 justify-between items-center">
-          <ListTitle text={l.name} />
+          <ListTitle
+            onChange={(name) => onListUpdate(l.id, { name: name })}
+            text={l.name}
+          />
           <div className="mx-5">
             <div className="me-2">
               <DeleteButton onClick={() => setDeleteModalState(true)} />

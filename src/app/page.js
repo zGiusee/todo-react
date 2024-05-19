@@ -172,10 +172,33 @@ export default function App() {
     const listIdx = allLists.findIndex((l) => l.id === id);
     const list = allLists[listIdx];
     const tempLists = [...allLists];
-
     tempLists.splice(listIdx, 1);
     setAllLists(tempLists);
     setSelectedList(-1);
+  };
+
+  const handleListUpdate = (id, data) => {
+    const listIdx = allLists.findIndex((l) => l.id === id);
+    const listToUpdate = allLists[listIdx];
+    const updateList = {
+      ...listToUpdate,
+      ...data,
+    };
+    const tempLists = [...allLists];
+    tempLists[listIdx] = updateList;
+    setAllLists(tempLists);
+  };
+
+  const handleCreateList = () => {
+    // const tempLists = [...allLists];
+    const newList = {
+      id: uuid(),
+      name: "Lista nuova",
+      icon: faBookmark,
+      undone_count: 0,
+    };
+
+    setAllLists((prevList) => [...prevList, newList]);
   };
 
   const addToListCount = (listIdx, num) => {
@@ -215,6 +238,7 @@ export default function App() {
         setTodosByListId={setTodosByListId}
         setSelectedList={setSelectedList}
         selectedList={selectedList}
+        onCreateList={handleCreateList}
       />
       {selectedList === -1 ? (
         <NoListView />
@@ -227,6 +251,7 @@ export default function App() {
           onTodoDelete={handleTodoDelete}
           onCreate={handleCreateTodo}
           onListDelete={handleListDelete}
+          onListUpdate={handleListUpdate}
         />
       )}
     </div>

@@ -13,13 +13,14 @@ export default function AppSidebar({
   setTodosByListId,
   setSelectedList,
   selectedList,
+  onCreateList,
 }) {
   return (
     <div className="flex h-screen overflow-auto text-white bg-gray-600 ">
       <div className="">
         {/* USER INFO'S */}
         <div>
-          <User user={user} />
+          <User user={user} onCreateList={onCreateList} />
         </div>
 
         <hr className="mx-5 text-white" />

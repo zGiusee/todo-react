@@ -13,6 +13,7 @@ export default function AppMain({
   lists,
   selectedList,
   onListDelete,
+  onListUpdate,
 }) {
   return (
     <div className="flex-1 overflow-auto">
@@ -26,6 +27,7 @@ export default function AppMain({
           lists={lists}
           selectedList={selectedList}
           onListDelete={onListDelete}
+          onListUpdate={onListUpdate}
         />
       </div>
     </div>
