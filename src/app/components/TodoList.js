@@ -34,7 +34,6 @@ export default function TodoList({
 }) {
   const nonCompletedTodos = todos.filter((t) => t.done === false);
   const completedTodos = todos.filter((t) => t.done === true);
-  const list = lists.filter((l) => l.id === selectedList);
   const [deleteModalState, setDeleteModalState] = useState(false);
 
   const completedCointainerClasses = `${
@@ -42,29 +41,34 @@ export default function TodoList({
   } mb-10`;
   return (
     <div className="h-screen overflow-auto">
-      {list.map((l) => (
-        <div className="flex my-8 justify-between items-center">
-          <ListTitle
-            onChange={(name) => onListUpdate(l.id, { name: name })}
-            text={l.name}
-          />
-          <div className="mx-5">
-            <div className="me-2">
-              <DeleteButton onClick={() => setDeleteModalState(true)} />
-              {deleteModalState && (
-                <DeleteModal
-                  type="list"
-                  text={l.name}
-                  onDelete={() => onListDelete(l.id)}
-                  onCancel={() => setDeleteModalState(false)}
-                />
-              )}
+      {lists
+        .filter((l) => l.id === selectedList)
+        .map((filterList) => (
+          <div
+            className="flex my-8 justify-between items-center"
+            key={filterList.id}
+          >
+            <ListTitle
+              onChange={(name) => onListUpdate(filterList.id, { name: name })}
+              text={filterList.name}
+            />
+            <div className="mx-5">
+              <div className="me-2">
+                <DeleteButton onClick={() => setDeleteModalState(true)} />
+                {deleteModalState && (
+                  <DeleteModal
+                    type="list"
+                    text={filterList.name}
+                    onDelete={() => onListDelete(filterList.id)}
+                    onCancel={() => setDeleteModalState(false)}
+                  />
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      <hr class="h-px mx-auto bg-gray-100 border-0 md:my-10 dark:bg-gray-300" />
+      <hr className="h-px mx-auto bg-gray-100 border-0 md:my-10 dark:bg-gray-300" />
 
       <div className="flex flex-col justify-between task-container">
         <div className="mt-5 px-10 overflow-auto">
